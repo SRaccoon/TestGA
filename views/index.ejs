@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <%console.log(comments)%>
+  <button onclick = "getFeed()">get Feed</button>
+</body>
+
+</html>
+<script src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+  async function init() {
+    FB.init({
+      appId: '591851981398568',
+      autoLogAppEvents: true,
+      xfbml: true,
+      version: 'v6.0'
+    });
+  }
+
+  async function login() {
+    FB.login(function (response) {
+      if (response.authResponse) {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/459640830808796/feed', function (response) {
+          console.log('Good to see you,', response);
+        });
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    })
+  }
+
+  function getFeed(){
+    FB.api("/459640830808796_1418383801601156/comments",function(res){
+      console.log(res);
+    })
+
+    FB.api("/1418383801601156_1421024991337037",function(res){
+      console.log(res);
+    })
+  }
+
+  async function start() {
+    await init();
+    await login();
+  }
+
+  start();
+</script>
