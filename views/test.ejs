@@ -1,61 +1,100 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Hello Analytics Reporting API V4</title>
-  <meta name="google-signin-client_id" content="166816571571-0n1oa6d19lvdotuf5rngq0ha9qnt36fn.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="250419758052-jmgcgk5pudhlu06ds00bepe8gj4guk72.apps.googleusercontent.com">
   <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
 </head>
+
 <body>
 
-<h1>Hello Analytics Reporting API V4</h1>
+  <h1>Hello Analytics Reporting API V4</h1>
 
-<!-- The Sign-in button. This will run `queryReports()` on success. -->
-<p class="g-signin2" data-onsuccess="queryReports"></p>
+  <!-- The Sign-in button. This will run `queryReports()` on success. -->
+  <p class="g-signin2" data-onsuccess="queryReports"></p>
 
-<!-- The API response will be printed here. -->
-<textarea cols="80" rows="20" id="query-output"></textarea>
+  <!-- The API response will be printed here. -->
+  <textarea cols="80" rows="20" id="query-output"></textarea>
+  <script src="https://apis.google.com/js/client:platform.js"></script>
 
-<script>
-  // Replace with your view ID.
-  var VIEW_ID = '212188888';
-    let client_key = '166816571571-u4l5icj5tt6jmdqfqu9i4qii91dgkcub.apps.googleusercontent.com';
+  <script>
+    // console.log(gapi)
+    // function start() {
+    //   // 2. Initialize the JavaScript client library.
+    //   gapi.auth2.getAuthInstance({
+    //     'apiKey': 'AIzaSyBB0Oq5Ux01_OaXCjtbOJkdn_6xcW3_QEQ',
+    //     // Your API key will be automatically added to the Discovery Document URLs.
+    //     'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
+    //     // clientId and scope are optional if auth is not required.
+    //     'clientId': '250419758052-jmgcgk5pudhlu06ds00bepe8gj4guk72.apps.googleusercontent.com',
+    //     'scope': 'profile',
+    //   }).then(function () {
+    //     // 3. Initialize and make the API request.
+    //     return gapi.client.people.people.get({
+    //       'resourceName': 'people/me',
+    //       'requestMask.includeField': 'person.names'
+    //     });
+    //   }).then(function (response) {
+    //     console.log(response.result);
+    //   }, function (reason) {
+    //     console.log('Error: ' + reason.result.error.message);
+    //   });
+    // };
+    // // 1. Load the JavaScript client library.
+    // gapi.load('client', start);
 
-  // Query the API and print the results to the page.
-  function queryReports() {
-    gapi.client.request({
-      path: '/v4/reports:batchGet',
-      root: 'https://analyticsreporting.googleapis.com/',
-      method: 'POST',
-      body: {
-        reportRequests: [
-          {
-            viewId: VIEW_ID,
-            dateRanges: [
-              {
-                startDate: '7daysAgo',
-                endDate: 'today'
-              }
-            ],
-            metrics: [
-              {
-                expression: 'ga:sessions'
-              }
-            ]
-          }
-        ]
-      }
-    }).then(displayResults, console.error.bind(console));
-  }
+    // Replace with your view ID.
+    // var VIEW_ID = '212188888';
+    var VIEW_ID = '1780006021';
 
-  function displayResults(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
-  }
-</script>
+    // let client_key = '166816571571-u4l5icj5tt6jmdqfqu9i4qii91dgkcub.apps.googleusercontent.com';
+    // let client_key = '250419758052-jmgcgk5pudhlu06ds00bepe8gj4guk72.apps.googleusercontent.com';
 
-<!-- Load the JavaScript API client and Sign-in library. -->
-<script src="https://apis.google.com/js/client:platform.js"></script>
 
+    // Query the API and print the results to the page.
+    function queryReports() {
+      gapi.client.request({
+        path: '/v4/reports:batchGet',
+        root: 'https://analyticsreporting.googleapis.com/',
+        method: 'POST',
+        body: {
+          reportRequests: [
+            {
+              viewId: VIEW_ID,
+              dateRanges: [
+                {
+                  startDate: '2020-03-01',
+                  endDate: '2020-03-10'
+                }
+              ],
+              dimensions: [
+                {
+                  name: 'ga:date'
+                },
+              ],
+              metrics: [
+                {
+                  expression: 'ga:1dayUsers'
+                },
+                {
+                  expression: 'ga:sessions'
+                }
+              ]
+            }
+          ]
+        }
+      }).then(displayResults, console.error.bind(console));
+    }
+
+    function displayResults(response) {
+      var formattedJson = JSON.stringify(response.result, null, 2);
+      document.getElementById('query-output').value = formattedJson;
+    }
+  </script>
+  <iframe src='https://console.firebase.google.com/project/dragon-ace-blackjack/analytics/app/android:com.gamespring.dbj/overview/'></iframe>
 </body>
+
 </html>
